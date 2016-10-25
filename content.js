@@ -20,6 +20,6 @@ function extractContent(cell) {
 }
 
 // gather all the data and send it somewhere
-allData = {"tabular": extractTabularData()};
+allData = {"tabular": extractTabularData(), "html": document.documentElement.innerHTML, "text": document.documentElement.innerText};
 
 console.log(JSON.stringify(allData));
