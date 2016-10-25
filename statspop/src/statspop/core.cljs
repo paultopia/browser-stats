@@ -1,11 +1,22 @@
 (ns statspop.core
     (:require [reagent.core :as reagent]))
 
+
+(def test-mini (js/jStat (array [[1 2] [3 4] [5 6]])))
+
+(defn test-jstat [arr]
+  (str (js/jStat.dimensions (js/jStat arr))))
+
+(.log js/console test-mini)
+(.log js/console (.dimensions test-mini))
+
 ;; -------------------------
 ;; Views
 
 (defn home-page []
-  [:div [:h2 "Welcome to Reagent"]])
+  [:div
+   [:h2 "Welcome to Reagent"]
+   [:p (test-jstat [[1 2] [3 4] [5 6]])]])
 
 ;; -------------------------
 ;; Initialize app
