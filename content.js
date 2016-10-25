@@ -1,18 +1,22 @@
-function ARRAYDAMNIT(someArrayLikeObject) {
+var ARRAYDAMNIT = function(someArrayLikeObject) {
     return [].slice.call(someArrayLikeObject);
+}
+
+Object.prototype.map = function(f) {
+    return ARRAYDAMNIT(this).map(f);
 }
 
 // extract data from everything in table form. Verified to work for headers in thead.
 function extractTabularData() {
-    return ARRAYDAMNIT(document.getElementsByTagName("table")).map(extractTable);
+    return document.getElementsByTagName("table").map(extractTable);
 }
 
 function extractTable(table) {
-    return ARRAYDAMNIT(table.rows).map(extractRows);
+    return table.rows.map(extractRows);
 }
 
 function extractRows(row) {
-    return ARRAYDAMNIT(row.cells).map(extractContent);
+    return row.cells.map(extractContent);
 }
 
 function extractContent(cell) {
