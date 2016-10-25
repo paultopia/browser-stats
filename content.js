@@ -3,7 +3,6 @@ function ARRAYDAMNIT(someArrayLikeObject) {
 }
 
 // extract data from everything in table form. Verified to work for headers in thead.
-
 function extractTabularData() {
     return ARRAYDAMNIT(document.getElementsByTagName("table")).map(extractTable);
 }
