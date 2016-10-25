@@ -1,19 +1,20 @@
-// extract data from everything in table form
 function ARRAYDAMNIT(someArrayLikeObject) {
     return [].slice.call(someArrayLikeObject);
 }
+
+// extract data from everything in table form. Verified to work for headers in thead.
+
 
 var tables = ARRAYDAMNIT(document.getElementsByTagName("table"));
 var tabulardata = tables.map(extractTable);
 
 function extractTable(table) {
     let rows = ARRAYDAMNIT(table.rows);
-    let headers = ARRAYDAMNIT(table.GetElementsByTagName("th"));
-    return {"headers": headers, "rows": rows.map(extractRows)};
+    return rows.map(extractRows);
 }
 
 function extractRows(row) {
-    let cells = ARRAYDAMNIT(row.GetElementsByTagName(""));
+    let cells = ARRAYDAMNIT(row.cells);
     return cells.map(extractContent);
 }
 
@@ -21,6 +22,4 @@ function extractContent(cell) {
     return cell.innerText;
 }
 
-// a bit of testing
-var dasdiv = document.createElement('div');
-dasdiv.innerHTML = JSON.stringify(tabulardata);
+console.log(JSON.stringify(tabulardata));
