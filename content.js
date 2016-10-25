@@ -7,7 +7,7 @@ var tables = ARRAYDAMNIT(document.getElementsByTagName("table"));
 var tabulardata = tables.map(extractTable);
 
 function extractTable(table) {
-    let rows = ARRAYDAMNIT(table.GetElementsByTagName("tr"));
+    let rows = ARRAYDAMNIT(table.rows);
     let headers = ARRAYDAMNIT(table.GetElementsByTagName("th"));
     return {"headers": headers, "rows": rows.map(extractRows)};
 }
