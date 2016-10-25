@@ -4,22 +4,23 @@ function ARRAYDAMNIT(someArrayLikeObject) {
 
 // extract data from everything in table form. Verified to work for headers in thead.
 
-
-var tables = ARRAYDAMNIT(document.getElementsByTagName("table"));
-var tabulardata = tables.map(extractTable);
+function extractTabularData() {
+    return ARRAYDAMNIT(document.getElementsByTagName("table")).map(extractTable);
+}
 
 function extractTable(table) {
-    let rows = ARRAYDAMNIT(table.rows);
-    return rows.map(extractRows);
+    return ARRAYDAMNIT(table.rows).map(extractRows);
 }
 
 function extractRows(row) {
-    let cells = ARRAYDAMNIT(row.cells);
-    return cells.map(extractContent);
+    return ARRAYDAMNIT(row.cells).map(extractContent);
 }
 
 function extractContent(cell) {
     return cell.innerText;
 }
 
-console.log(JSON.stringify(tabulardata));
+// gather all the data and send it somewhere
+allData = {"tabular": extractTabularData()};
+
+console.log(JSON.stringify(allData));
