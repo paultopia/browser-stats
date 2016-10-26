@@ -50,28 +50,28 @@
 (defn show-line-chart
   [chart-data]
   (let [{:keys [data options]} chart-data]
-    (.log js/console "showing line chart")
+    (.log js/console (str "showing line chart with: " data))
     (js/Chartist.Line. ".ct-chart" (clj->js data) (clj->js options))))
 
 (defn line-component
-  [datom]
-  (let [chart-state @datom]
+  [chart-data chart-datom]
     (reagent/create-class
-     {:component-did-mount #(show-line-chart chart-state)
-      :component-will-update #(show-line-chart chart-state)
-      :component-will-receive-props #(show-line-chart chart-state)
-      :component-did-update #(show-line-chart chart-state)
+     {:component-did-mount #(show-line-chart @chart-datom)
+      :component-will-update #(show-line-chart @chart-datom)
+      :component-will-receive-props #(show-line-chart @chart-datom)
+      :component-did-update #(show-line-chart @chart-datom)
       :display-name        "chart-component"
       :reagent-render      (fn []
-                             [:div {:class "ct-chart ct-perfect-fourth"}])})))
+                             [:div {:class "ct-chart ct-perfect-fourth"}])}))
 
 (defn switch-line-chart [datom]
   (let [chart-state @datom
         new-datom (condp = chart-state
       test-line-data1 test-line-data2
       test-line-data2 test-line-data1)]
-    (.log js/console (str "switching to" new-datom))
-    (reset! datom new-datom)))
+    (.log js/console (str "switching to: " new-datom))
+    (reset! datom new-datom)
+    (.log js/console (str "data now is: " @datom))))
 
 
 ;; -------------------------
@@ -82,7 +82,7 @@
    [:h2 "Welcome to Reagent"]
    [:p (test-jstat [[1 2] [3 4] [5 6]])]
    [:p [:button {:on-click #(switch-line-chart line-datom)} "switch charts"]]
-   [line-component line-datom]])
+   [line-component @line-datom line-datom]])
 
 ;; -------------------------
 ;; Initialize app
