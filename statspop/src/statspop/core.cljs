@@ -40,7 +40,7 @@
                       :options {:width  "700px"
                                 :height "380px"}})
 
-(def test-line-data2 {:data {:labels ["Mar-2012" "Jun-2012" "Nov-2012" "Oct-2013" "Nov-2014"]
+(def test-line-data2 {:data {:labels ["Mar-2013" "Jun-2013" "Nov-2013" "Oct-2014" "Nov-2015"]
                              :series [[25 15 6 1 1]]}
                       :options {:width  "700px"
                                 :height "380px"}})
@@ -48,19 +48,20 @@
 (def line-datom (reagent/atom test-line-data1))
 
 (defn show-line-chart
-  [datom]
-  (let [{:keys [data options]} @datom]
+  [chart-data]
+  (let [{:keys [data options]} chart-data]
     (js/Chartist.Line. ".ct-chart" (clj->js data) (clj->js options))))
 
 (defn line-component
   [datom]
+  (let [chart-state @datom]
     (reagent/create-class
-     {:component-did-mount #(show-line-chart datom)
-      :component-will-update #(show-line-chart datom)
-      :component-will-receive-props #(show-line-chart datom)
+     {:component-did-mount #(show-line-chart chart-state)
+      :component-will-update #(show-line-chart chart-state)
+      :component-will-receive-props #(show-line-chart chart-state)
       :display-name        "chart-component"
       :reagent-render      (fn []
-                             [:div {:class "ct-chart ct-perfect-fourth"}])}))
+                             [:div {:class "ct-chart ct-perfect-fourth"}])})))
 
 (defn switch-line-chart [datom]
   (let [chart-state @datom 
