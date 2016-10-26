@@ -50,6 +50,7 @@
 (defn show-line-chart
   [chart-data]
   (let [{:keys [data options]} chart-data]
+    (.log js/console "showing line chart")
     (js/Chartist.Line. ".ct-chart" (clj->js data) (clj->js options))))
 
 (defn line-component
@@ -59,17 +60,19 @@
      {:component-did-mount #(show-line-chart chart-state)
       :component-will-update #(show-line-chart chart-state)
       :component-will-receive-props #(show-line-chart chart-state)
+      :component-did-update #(show-line-chart chart-state)
       :display-name        "chart-component"
       :reagent-render      (fn []
                              [:div {:class "ct-chart ct-perfect-fourth"}])})))
 
 (defn switch-line-chart [datom]
-  (let [chart-state @datom 
+  (let [chart-state @datom
         new-datom (condp = chart-state
       test-line-data1 test-line-data2
       test-line-data2 test-line-data1)]
     (.log js/console (str "switching to" new-datom))
     (reset! datom new-datom)))
+
 
 ;; -------------------------
 ;; Views
