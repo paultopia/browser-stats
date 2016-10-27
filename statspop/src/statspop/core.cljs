@@ -31,7 +31,7 @@
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-1)} "load data 1"]]
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-2)} "load data 2"]]
    [:p [:button {:on-click #(reset! c/chart-datom (sp/make-scatterplot sp/test-data))} "scatterplot"]]
-   [:p [:button {:on-click #(reset! c/chart-datom (hist/make-histogram sp/tv 5))} "histogram"]]
+   [:p [:button {:on-click #(reset! c/chart-datom (hist/make-histogram hist/tv 10))} "histogram"]]
    [c/chart-component c/chart-datom]])
 
 ;; -------------------------

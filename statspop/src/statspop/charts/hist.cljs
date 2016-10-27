@@ -118,10 +118,12 @@
         ks (mapv (comp str #(js/Math.round %)) (keys hist-data))]
     {:labels ks :series [(vec (vals hist-data))]}))
 
-(defn make-histogram [data nbins]
+(defn make-histogram [raw-data nbins]
+  (let [data (hist-keys-series raw-data nbins)]
+    (.log js/console (str data))
     {:chart-type js/Chartist.Bar
      :data data
-     :class "ct-chart ct-perfect-fourth"})
+     :class "ct-chart ct-perfect-fourth"}))
 
 ;; ABSOLUTELY MUST warn users that histogram is rough, because bin numbers
 ;; often don't match well to dataset sizes and shapes, uses lots of rounding
