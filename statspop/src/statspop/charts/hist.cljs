@@ -1,5 +1,4 @@
-(ns statspop.charts.hist
-  (:require [cljs.pprint :as pprint]))
+(ns statspop.charts.hist)
 
 ;; test data
 
@@ -115,9 +114,12 @@
     (into (sorted-map) (frequencies binned-data))))
 
 (defn make-hist [data nbins]
-  (let [hist-data (make-hist-data data nbins)]
-    ))
+  (let [hist-data (make-hist-data data nbins)
+        ks (mapv (comp str #(js/Math.round %)) (keys hist-data))]
+    {:labels ks :vals (vec (vals hist-data))}))
 
-;; on test data, result is: {0 27, 9.8 26, 19.6 20, 29.400000000000002 17, 39.2 10}.  need to visually verify that between 0 and 9.8 is 27, between 9.8 and 19.6 is 26, etc.  Then need to map a rounding function over the keys and then to string, and I've got the x axis labels of the chart (need to note to users that it's rounded); get the values 
+;; ABSOLUTELY MUST warn users that histogram is rough, because bin numbers
+;; often don't match well to dataset sizes and shapes, uses lots of rounding
+;; and might well mislead for small datasets. should be fine for big ones though.
 
-;; to trunc, use (pp/cl-format nil  "~,-0f" 1.2345) but strip trailing period?  or just use round from js?  
+;; I should also use transducers to make this more efficient. Way too many intermediate collections in here now. 
