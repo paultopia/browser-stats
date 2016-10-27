@@ -16,11 +16,13 @@
     {:chart-type js/Chartist.Line
      :data data
      :options {:showLine false
-               :axisX {:high 5
-                       :low 0
-                       :scaleMinSpace 20
-                       :referenceValue 3
+               :axisX {:type js/Chartist.AutoScaleAxis
                        :onlyInteger true}
+               ;; :axisX {:high 5
+               ;;         :low 0
+               ;;         :scaleMinSpace 20
+               ;;         :referenceValue 3
+               ;;         :onlyInteger true}
                :axisY {:high 200
                        :low 0
                        :scaleMinSpace 20
