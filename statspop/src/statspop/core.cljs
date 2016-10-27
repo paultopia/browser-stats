@@ -1,5 +1,6 @@
 (ns statspop.core
-    (:require [reagent.core :as reagent]))
+  (:require [reagent.core :as reagent]
+            [statspop.charts.core :as c]))
 
 
 (def test-mini (js/jStat (clj->js [[1 2] [3 4] [5 6]])))
@@ -65,8 +66,11 @@
   [:div
    [:h2 "Welcome to Reagent"]
    [:p (test-jstat [[1 2] [3 4] [5 6]])]
-   [:p [:button {:on-click #(switch-line-chart line-datom)} "switch charts"]]
-   [line-component line-datom]])
+  ;; [:p [:button {:on-click #(switch-line-chart line-datom)} "switch charts"]]
+   ;; [line-component line-datom]
+   [:p [:button {:on-click #(reset! c/chart-datom c/test-data-1)} "load data 1"]]
+   [:p [:button {:on-click #(reset! c/chart-datom c/test-data-2)} "load data 2"]]
+   [c/chart-component c/chart-datom]])
 
 ;; -------------------------
 ;; Initialize app
