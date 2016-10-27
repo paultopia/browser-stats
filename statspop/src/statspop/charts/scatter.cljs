@@ -18,15 +18,10 @@
      :options {:showLine false
                :axisX {:type js/Chartist.AutoScaleAxis
                        :onlyInteger true}
-               ;; :axisX {:high 5
-               ;;         :low 0
-               ;;         :scaleMinSpace 20
-               ;;         :referenceValue 3
-               ;;         :onlyInteger true}
-               :axisY {:high 200
-                       :low 0
-                       :scaleMinSpace 20
-                       :referenceValue 100
-                       :onlyInteger true}
-               }
-     :class "ct-chart"}))
+               :axisY {:type js/Chartist.AutoScaleAxis
+                       :onlyInteger true}}
+     :class "ct-chart ct-perfect-fourth"}))
+
+;; it might be sensible to convert to standard deviation units?
+;; actually would like to give users an option to do this, perhaps in the
+;; function that selects the data to pass to the scatterplot function.
