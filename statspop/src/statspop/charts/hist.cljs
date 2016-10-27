@@ -136,3 +136,5 @@
 ;; actually, multiple variables should be trivially easy.  Just pass in a vector of vectors as data, map hist-keys-series over it, and pull out that last nested vector.
 
 ;; really issue is that I should require it to be normalized, say each to the range 0-1, for multiple histograms.  So maybe just a different function, or have make-histogram be multiple-arity?
+
+;; for chartist multiple bars is trivial, so for multiple histograms I seriously just need to put the additional data as a second vector in :series.
