@@ -114,7 +114,7 @@
   [:div
    [:h2 "Welcome to Reagent"]
    [:p (test-jstat [[1 2] [3 4] [5 6]])]
-   [:p [:button {:on-click #(switch-line-chart line-datom)} "switch charts"]]
+   [:p [:button {:on-click #(switch-line-chartb line-datomb)} "switch charts"]]
    [line-componentb line-datomb]])
 
 ;; -------------------------
