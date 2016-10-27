@@ -62,11 +62,46 @@
       :reagent-render      (fn []
                              [:div {:class "ct-chart ct-perfect-fourth"}])}))
 
+;; experimenting with doing it without double-calls
+
+(def test-line-data1b {:data {:labels ["Mar-2012" "Jun-2012" "Nov-2012" "Oct-2013" "Nov-2014"]
+                             :series [[1 1 6 15 25]]}
+                      :options {:width  "700px"
+                                :height "380px"}
+                       :class "ct-chart ct-perfect-fourth"})
+
+(def test-line-data2b {:data {:labels ["Mar-2013" "Jun-2013" "Nov-2013" "Oct-2014" "Nov-2015"]
+                             :series [[25 15 6 1 1]]}
+                      :options {:width  "700px"
+                                :height "380px"}
+                       :class "ct-chart ct-perfect-fourth"})
+
+(def line-datomb (reagent/atom test-line-data1b))
+
+(defn line-componentb
+  [chart-datom]
+  (reagent/create-class
+   {:component-did-mount #(show-line-chart @chart-datom)
+    :component-did-update #(show-line-chart @chart-datom)
+    :display-name        "chart-component"
+    :reagent-render      (fn [chart-datom]
+                           [:div {:class (:class @chart-datom)}])}))
+
 (defn switch-line-chart [datom]
   (let [chart-state @datom
         new-datom (condp = chart-state
       test-line-data1 test-line-data2
       test-line-data2 test-line-data1)]
+    (.log js/console (str "switching to: " new-datom))
+    (reset! datom new-datom)
+    (.log js/console (str "data now is: " @datom))))
+
+
+(defn switch-line-chartb [datom]
+  (let [chart-state @datom
+        new-datom (condp = chart-state
+                    test-line-data1b test-line-data2b
+                    test-line-data2b test-line-data1b)]
     (.log js/console (str "switching to: " new-datom))
     (reset! datom new-datom)
     (.log js/console (str "data now is: " @datom))))
@@ -80,7 +115,7 @@
    [:h2 "Welcome to Reagent"]
    [:p (test-jstat [[1 2] [3 4] [5 6]])]
    [:p [:button {:on-click #(switch-line-chart line-datom)} "switch charts"]]
-   [line-component @line-datom line-datom]])
+   [line-componentb line-datomb]])
 
 ;; -------------------------
 ;; Initialize app
