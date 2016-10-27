@@ -11,9 +11,11 @@
          (mapv #(identity {:x (first %) :y (second %)})))))
 
 (defn make-scatterplot [variables]
-  {:chart-type js/Chartist.Line
-   :data (reformat-data variables)
-   :options {:width  "700px"
-             :height "380px"
-             :showLine true}
-   :class "ct-chart ct-perfect-fourth"})
+  (let [data [(reformat-data variables)]]
+    (.log js/console (clj->js data))
+    {:chart-type js/Chartist.Line
+     :data data
+     :options {:showLine false
+               :axisX {:type js/Chartist.AutoScaleAxis
+                       :onlyInteger true}}
+     :class "ct-chart"}))

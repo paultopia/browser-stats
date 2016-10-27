@@ -1,6 +1,7 @@
 (ns statspop.core
   (:require [reagent.core :as reagent]
-            [statspop.charts.core :as c]))
+            [statspop.charts.core :as c]
+            [statspop.charts.scatter :as sp]))
 
 
 (def test-mini (js/jStat (clj->js [[1 2] [3 4] [5 6]])))
@@ -28,6 +29,7 @@
    ;; [line-component line-datom]
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-1)} "load data 1"]]
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-2)} "load data 2"]]
+   [:p [:button {:on-click #(reset! c/chart-datom (sp/make-scatterplot sp/test-data))} "scatterplot"]]
    [c/chart-component c/chart-datom]])
 
 ;; -------------------------
