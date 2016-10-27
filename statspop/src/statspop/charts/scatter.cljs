@@ -12,7 +12,6 @@
 
 (defn make-scatterplot [variables]
   (let [data {:series [(reformat-data variables)]}]
-    (.log js/console (clj->js data))
     {:chart-type js/Chartist.Line
      :data data
      :options {:showLine false

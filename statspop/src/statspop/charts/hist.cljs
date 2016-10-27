@@ -105,7 +105,7 @@
          48
          49])
 
-(defn make-hist-data
+(defn hist-freqs
   [data nbins]
   (let [max (apply max data)
         min (apply min data)
@@ -113,13 +113,20 @@
         binned-data (mapv #(* binsize (quot % binsize)) data)] ;; dirty trick to compress range to single values
     (into (sorted-map) (frequencies binned-data))))
 
-(defn make-hist [data nbins]
-  (let [hist-data (make-hist-data data nbins)
+(defn hist-keys-series [data nbins]
+  (let [hist-data (hist-freqs data nbins)
         ks (mapv (comp str #(js/Math.round %)) (keys hist-data))]
-    {:labels ks :vals (vec (vals hist-data))}))
+    {:labels ks :series [(vec (vals hist-data))]}))
+
+(defn make-histogram [data nbins]
+    {:chart-type js/Chartist.Bar
+     :data data
+     :class "ct-chart ct-perfect-fourth"})
 
 ;; ABSOLUTELY MUST warn users that histogram is rough, because bin numbers
 ;; often don't match well to dataset sizes and shapes, uses lots of rounding
 ;; and might well mislead for small datasets. should be fine for big ones though.
 
 ;; I should also use transducers to make this more efficient. Way too many intermediate collections in here now. 
+
+;; also I should later build the capacity to put multiple variables on one histogram.
