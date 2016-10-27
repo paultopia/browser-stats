@@ -57,8 +57,6 @@
   [chart-data chart-datom]
     (reagent/create-class
      {:component-did-mount #(show-line-chart @chart-datom)
-      :component-will-update #(show-line-chart @chart-datom)
-      :component-will-receive-props #(show-line-chart @chart-datom)
       :component-did-update #(show-line-chart @chart-datom)
       :display-name        "chart-component"
       :reagent-render      (fn []
