@@ -2,9 +2,11 @@
   (:require [reagent.core :as r]
             [statspop.charts.core :as c]
             [statspop.charts.scatter :as sp]
-            [statspop.charts.hist :as hist]))
+            [statspop.charts.hist :as hist]
+            [goog.math.Matrix]))
 
 
+;; experimenting with jstat
 (def test-mini (js/jStat (clj->js [[1 2] [3 4] [5 6]])))
 
 (defn test-jstat [arr]
@@ -15,9 +17,14 @@
 (.log js/console test-mini)
 (.log js/console (.dimensions test-mini))
 
+;; experimenting with google closure math
 
 
+(def test-matrix (clj->js [[1 2 3][4 5 6]]))
 
+
+(.log js/console (str (js->clj (.toArray (.multiply (js/goog.math.Matrix. test-matrix) 2)))))
+;; ok matrix operations with google closure seem to want to behave.
 
 ;; -------------------------
 ;; Views
