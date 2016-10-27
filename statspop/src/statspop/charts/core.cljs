@@ -20,8 +20,6 @@
 ;; core functions to retain.
 
 (def chart-datom (atom nil))
-;; this throws an error on initial render because there isn't a chart-type to call. I'm ok with that.  It doesn't crash.  though maybe I can try it with bogus data?  or just catch the error.
-
 
 (defn show-chart
   [chart-data]
@@ -31,8 +29,9 @@
 (defn chart-component
   [chart-datom]
   (create-class
-   {:component-did-mount #(show-chart @chart-datom)
-    :component-did-update #(show-chart @chart-datom)
+   {:component-did-update #(show-chart @chart-datom)
     :display-name        "chart-component"
     :reagent-render      (fn [chart-datom]
                            [:div {:class (:class @chart-datom)}])}))
+
+;; this is going to throw an error whenever the chart is taken down unless I find some way to replace it with a blank chart or blank component.  Or just not have an option to take it down?  because why bother, it'll be reset for any new page or table anyway. 
