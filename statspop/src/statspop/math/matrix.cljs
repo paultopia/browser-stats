@@ -18,9 +18,6 @@
   (matrixify [this]
     (js/goog.math.Matrix. (clj->js this))))
 
-;; according to this http://stackoverflow.com/questions/11421805/clojurescript-protocol-usage I should be able to
-;; treat matrixify like a regular function here now.
-
 (defn multiply
   "multiply matrices"
   [a-matrix another-matrix]
