@@ -35,3 +35,13 @@
   "invert matrix"
   [matrix]
   (.getInverse matrix))
+
+(defn m-to-array
+  "return matrix to javascript nested arrays"
+  [matrix]
+  (.toArray matrix))
+
+(defn m-to-cljs
+  "return matrix to clojurescript nested vectors"
+  [matrix]
+  (js->clj (.toArray matrix)))

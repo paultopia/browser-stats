@@ -3,7 +3,7 @@
             [statspop.charts.core :as c]
             [statspop.charts.scatter :as sp]
             [statspop.charts.hist :as hist]
-            [goog.math.Matrix]))
+            [statspop.math.matrix :as matrix]))
 
 
 ;; experimenting with jstat
@@ -12,18 +12,20 @@
 (defn test-jstat [arr]
   (str (js/jStat.dimensions (js/jStat arr))))
 
-;; might just be worth rolling my own with github.com/thinktopic/aljabr for the matrix math.  except actually neither it nor thi-ng/ndarray seem to want to provide actual matrix math... there is also more js, in toji/gl-matrix. 
 
-(.log js/console test-mini)
-(.log js/console (.dimensions test-mini))
+;; (.log js/console test-mini)
+;; (.log js/console (.dimensions test-mini))
 
 ;; experimenting with google closure math
 
+(def test-mat1 [[1 2 3] [4 5 6]])
 
-(def test-matrix (clj->js [[1 2 3][4 5 6]]))
+(def test-mat2 (clj->js [[7 8 9] [10 11 12]]))
 
+(.log js/console (-> test-mat1 matrix/matrixify matrix/transpose matrix/m-to-cljs str))
 
-(.log js/console (str (js->clj (.toArray (.multiply (js/goog.math.Matrix. test-matrix) 2)))))
+(.log js/console (-> test-mat2 matrix/matrixify matrix/transpose matrix/m-to-cljs str))
+
 ;; ok matrix operations with google closure seem to want to behave.
 
 ;; -------------------------
