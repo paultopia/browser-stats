@@ -43,9 +43,14 @@
       (println (str "INCOMING item " cur-idx))
       (cond
         (= 0 (count remaining))
-        (if (>= (count active-region) minsize)
-          (conj all-regions active-region)
-          all-regions)
+        (if (= (inc (last active-region)) cur-idx)
+          (if (>= (count (conj active-region cur-idx)) minsize)
+            (conj all-regions (conj active-region cur-idx))
+            all-regions)
+          (if (>= (count active-region) minsize)
+            (conj all-regions active-region)
+            all-regions)
+          )
         (= active-region [])
         (do
           (println {:stage "appending to empty region" :all all-regions :active active-region :item cur-idx :rest remaining})
