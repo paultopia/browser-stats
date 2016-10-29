@@ -39,8 +39,6 @@
          active-region []
          cur-idx (first indices)
          remaining (rest indices)]
-    (do
-      (println (str "INCOMING item " cur-idx))
       (cond
         (= 0 (count remaining))
         (if (= (inc (last active-region)) cur-idx)
@@ -52,19 +50,12 @@
             all-regions)
           )
         (= active-region [])
-        (do
-          (println {:stage "appending to empty region" :all all-regions :active active-region :item cur-idx :rest remaining})
-          (recur all-regions (conj active-region cur-idx) (first remaining) (rest remaining)))
+          (recur all-regions (conj active-region cur-idx) (first remaining) (rest remaining))
         (= (inc (last active-region)) cur-idx)
-        (do
-          (println {:stage "appending to unbroken run" :all all-regions :active active-region :item cur-idx :rest remaining})
-          (recur all-regions (conj active-region cur-idx) (first remaining) (rest remaining)))
+          (recur all-regions (conj active-region cur-idx) (first remaining) (rest remaining))
         :else (if (>= (count active-region) minsize)
-                (do
-                  (println {:stage "run broken, appending to all-regions" :all all-regions :active active-region :item cur-idx :rest remaining})
-                  (recur (conj all-regions active-region) (conj [] cur-idx) (first remaining) (rest remaining)))
-                (do (println {:stage "run-broken, not appending (too small)" :all all-regions :active active-region :item cur-idx :rest remaining})
-                    (recur all-regions (conj [] cur-idx) (first remaining) (rest remaining))))))))
+                  (recur (conj all-regions active-region) (conj [] cur-idx) (first remaining) (rest remaining))
+                    (recur all-regions (conj [] cur-idx) (first remaining) (rest remaining))))))
 
 (def test-lines "123 abc
   foo bar baa
