@@ -34,6 +34,7 @@
   (mapv :index matches)))
 
 (defn find-runs
+  "given a vector of numeric indices and int minsize, returns non-overlapping vectors of runs of sequential numbers where those runs are at least minsize"
   [indices minsize]
   (loop [all-regions []
          active-region []
@@ -57,20 +58,40 @@
                   (recur (conj all-regions active-region) (conj [] cur-idx) (first remaining) (rest remaining))
                     (recur all-regions (conj [] cur-idx) (first remaining) (rest remaining))))))
 
-(def test-lines "123 abc
-  foo bar baa
-  1234 a
-  1245 ab
-  1 ab
-  12345
-  ab
-  12345
-  12
-  1 2
-  1 a 1 2")
+(defn get-lines-matching-indexes
+  "given vector of lines and vector of indices, return subvector of lines at indices"
+  [lines indices]
+  (mapv (partial get lines) indices))
 
-(def l (lines test-lines))
+(defn get-lines-from-nested-indices
+  [lines nested-indices]
+  (mapv (partial get-lines-matching-indexes lines) nested-indices))
 
-(def il (make-index-maps l))
+(defn gather-runs
+  "FINALLY!  this is the entry point to all that mess.
 
-(def im (get-indexes-of-matches il 0.5))
+  takes multiline text string. splits it into lines. and then searches for lines with at least minproportion of digits in at least minruns runs.
+  produces vector of runs (where each run is a vector of lines)
+
+  text = string
+  minproportion = float between 0 and 1
+  minruns = integer > 0
+  returns: vector of vectors, where each vector is a run of consecutive strings with at least minproportion of digits."
+  [text minproportion minruns]
+  (let [lns (lines text)
+        index-maps (make-index-maps lns)
+        indices (get-indexes-of-matches index-maps minproportion)
+        runs (find-runs indices minruns)]
+    (get-lines-from-nested-indices lns runs)))
+
+;; (def test-lines "123 abc
+;;   foo bar baa
+;;   1234 a
+;;   1245 ab
+;;   1 ab
+;;   12345
+;;   ab
+;;   12345
+;;   12
+;;   1 2
+;;   1 a 1 2")
