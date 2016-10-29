@@ -1,7 +1,13 @@
 (ns statspop.detection
   "attempt to detect tabular data in non-table formats by finding continuous sets of rows of at least size x with at least some y proportion of numbers.  data coming in from chrome extension as documentElement.innerText
 
- INCOMPLETE"
+ USAGE:
+
+  the only function that should actually be used here is gather-runs.  It takes a string of innerText from a webpage, splits it up into lines,
+  and then finds consecutive runs (of user-specified size) of lines where the ratio of digits to total non-space characters is greater than some user-specified proportion.
+
+  for actual use in the UI, the user will have to be asked to choose heuristic detection and then operate a pair of sliders to do this.
+  "
   (:require [clojure.string :as str]))
 
 
