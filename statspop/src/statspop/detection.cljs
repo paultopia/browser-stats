@@ -40,9 +40,12 @@
          cur-idx (first indices)
          remaining (rest indices)]
     (do
-      (println {:stage "in" :all all-regions :active active-region :item cur-idx :rest remaining})
+      (println (str "INCOMING item " cur-idx))
       (cond
-        (= 0 (count remaining)) all-regions
+        (= 0 (count remaining))
+        (if (>= (count active-region) minsize)
+          (conj all-regions active-region)
+          all-regions)
         (= active-region [])
         (do
           (println {:stage "appending to empty region" :all all-regions :active active-region :item cur-idx :rest remaining})
@@ -56,7 +59,7 @@
                   (println {:stage "run broken, appending to all-regions" :all all-regions :active active-region :item cur-idx :rest remaining})
                   (recur (conj all-regions active-region) [] (first remaining) (rest remaining)))
                 (do (println {:stage "run-broken, not appending (too small)" :all all-regions :active active-region :item cur-idx :rest remaining})
-                    (recur active-region [] (first remaining) (rest remaining))))))))
+                    (recur all-regions [] (first remaining) (rest remaining))))))))
 
 (def test-lines "123 abc
   foo bar baa
