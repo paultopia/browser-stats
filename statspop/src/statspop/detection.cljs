@@ -57,9 +57,9 @@
         :else (if (>= (count active-region) minsize)
                 (do
                   (println {:stage "run broken, appending to all-regions" :all all-regions :active active-region :item cur-idx :rest remaining})
-                  (recur (conj all-regions active-region) [] (first remaining) (rest remaining)))
+                  (recur (conj all-regions active-region) (conj [] cur-idx) (first remaining) (rest remaining)))
                 (do (println {:stage "run-broken, not appending (too small)" :all all-regions :active active-region :item cur-idx :rest remaining})
-                    (recur all-regions [] (first remaining) (rest remaining))))))))
+                    (recur all-regions (conj [] cur-idx) (first remaining) (rest remaining))))))))
 
 (def test-lines "123 abc
   foo bar baa
