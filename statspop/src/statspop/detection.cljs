@@ -26,17 +26,37 @@
   [vov]
   (map-indexed #(identity {:index %1 :vals %2}) vov))
 
-(defn id-num-mapped
-  "convenience function for mapping "
-  [proportion m]
-  )
-
 (defn get-indexes-of-matches
   "filter the index-maps by testing values against identify-numeric
   this could really be optimized with transducer. too much unnecessary intermediate collection"
   [indexed-maps proportion]
   (let [matches (filter #(identify-numeric proportion (:vals %)) indexed-maps)]
   (mapv :index matches)))
+
+(defn find-runs
+  [indices minsize]
+  (loop [all-regions []
+         active-region []
+         cur-idx (first indices)
+         remaining (rest indices)]
+    (do
+      (println {:stage "in" :all all-regions :active active-region :item cur-idx :rest remaining})
+      (cond
+        (= 0 (count remaining)) all-regions
+        (= active-region [])
+        (do
+          (println {:stage "appending to empty region" :all all-regions :active active-region :item cur-idx :rest remaining})
+          (recur all-regions (conj active-region cur-idx) (first remaining) (rest remaining)))
+        (= (inc (last active-region)) cur-idx)
+        (do
+          (println {:stage "appending to unbroken run" :all all-regions :active active-region :item cur-idx :rest remaining})
+          (recur all-regions (conj active-region cur-idx) (first remaining) (rest remaining)))
+        :else (if (>= (count active-region) minsize)
+                (do
+                  (println {:stage "run broken, appending to all-regions" :all all-regions :active active-region :item cur-idx :rest remaining})
+                  (recur (conj all-regions active-region) [] (first remaining) (rest remaining)))
+                (do (println {:stage "run-broken, not appending (too small)" :all all-regions :active active-region :item cur-idx :rest remaining})
+                    (recur active-region [] (first remaining) (rest remaining))))))))
 
 (def test-lines "123 abc
   foo bar baa
@@ -49,3 +69,9 @@
   12
   1 2
   1 a 1 2")
+
+(def l (lines test-lines))
+
+(def il (make-index-maps l))
+
+(def im (get-indexes-of-matches il 0.5))
