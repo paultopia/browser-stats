@@ -61,7 +61,11 @@
 
    vector of numeric vectors --> map of string-num parings
 
-   assumes column-wise data input."
+   assumes column-wise data input.
+
+  UNTESTED!!!
+
+  "
   [in-matrix]
   (loop [col (first in-matrix)
          cor-with (rest in-matrix)

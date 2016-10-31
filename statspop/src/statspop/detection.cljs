@@ -8,8 +8,9 @@
 
   for actual use in the UI, the user will have to be asked to choose heuristic detection and then operate a pair of sliders to do this.
   "
-  (:require [clojure.string :as str]))
-
+  (:require [clojure.string :as str]
+            [devcards.core])
+  (:require-macros [devcards.core :as dc :refer [defcard deftest defcard-rg]]))
 
 ;; to filter by digit proportions
 (defn lines [text] (str/split text #"\n"))
@@ -89,6 +90,23 @@
         indices (get-indexes-of-matches index-maps minproportion)
         runs (find-runs indices minruns)]
     (get-lines-from-nested-indices lns runs)))
+
+(defcard parsing-numerical-lines
+  "hackish test of gather-runs functionality"
+  (fn []
+    (let [test-lines "123 abc
+  foo bar baa
+  1234 a
+  1245 ab
+  1 ab
+  12345
+  ab
+  12345
+  12
+  1 2
+  1 a 1 2"]
+      (gather-runs test-lines 0.5 3))))
+
 
 ;; (def test-lines "123 abc
 ;;   foo bar baa

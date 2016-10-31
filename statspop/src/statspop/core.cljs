@@ -4,6 +4,7 @@
             [statspop.charts.scatter :as sp]
             [statspop.charts.hist :as hist]
             [statspop.math.matrix :as matrix]
+            [statspop.detection :as detection]
             [devcards.core])
   (:require-macros [devcards.core :as dc :refer [defcard deftest defcard-rg]]))
 
