@@ -3,7 +3,9 @@
             [statspop.charts.core :as c]
             [statspop.charts.scatter :as sp]
             [statspop.charts.hist :as hist]
-            [statspop.math.matrix :as matrix]))
+            [statspop.math.matrix :as matrix]
+            [devcards.core])
+  (:require-macros [devcards.core :as dc :refer [defcard deftest defcard-rg]]))
 
 
 ;; experimenting with jstat
@@ -12,6 +14,10 @@
 (defn test-jstat [arr]
   (str (js/jStat.dimensions (js/jStat arr))))
 
+(defcard-rg test-card
+  "testing devcards"
+   [:div
+    [:h1 "This is your first devcard!"]])
 
 ;; (.log js/console test-mini)
 ;; (.log js/console (.dimensions test-mini))

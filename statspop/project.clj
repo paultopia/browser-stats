@@ -6,12 +6,13 @@
 
   :dependencies [[org.clojure/clojure "1.8.0" :scope "provided"]
                  [org.clojure/clojurescript "1.9.229" :scope "provided"]
-                 [reagent "0.6.0"]]
+                 [reagent "0.6.0"]
+                 [devcards "0.2.2"]]
 
-  :plugins [[lein-cljsbuild "1.1.3"]
-            [lein-figwheel "0.5.4-5"]]
+  :plugins [[lein-cljsbuild "1.1.4"]
+            [lein-figwheel "0.5.8"]]
 
-  :min-lein-version "2.5.0"
+  :min-lein-version "2.7.1"
 
   :clean-targets ^{:protect false}
   [:target-path
@@ -35,6 +36,17 @@
                          :source-map true
                          :optimizations :none
                          :pretty-print  true}}
+                       :devcards
+                       {:source-paths ["src" "env/dev/cljs"]
+                        :figwheel
+                        {:devcards true}
+                        :compiler
+                        { :main       "statspop.dev"
+                         :asset-path "js/devcards_out"
+                         :output-to  "public/js/devcards.js"
+                         :output-dir "public/js/devcards_out"
+                         :optimizations :none
+                         :source-map-timestamp true }}
                        :release
                        {:source-paths ["src" "env/prod/cljs"]
                         :compiler
