@@ -70,3 +70,5 @@
          distro-mean (:mean opts 0)
          distro-sd (:sd opts 1)]
      (z->p z-stat distro-mean distro-sd tail))))
+
+;; just need to add chi-square statistic + hypothesis test (and maybe f stuff) + maybe two-sample t and z then actually test these against known values --- devcards yo.
