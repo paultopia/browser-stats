@@ -1,11 +1,11 @@
 (ns statspop.math.basic
   "basic math and stats functions"
-  (:require [goog.math :as math]))
+  (:require [goog.math :as gmath]))
 
 (defn stdev
-  "standard deviation. vec of nums -> num"
+  "standard deviation. vec of nums -> num.  Note, per goog.math api docs, this is sample standard deviation "
   [nums]
-  (apply math/standardDeviation nums))
+  (apply gmath/standardDeviation nums))
 
 (defn mean
   "mean. vec of nums -> num"
