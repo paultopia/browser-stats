@@ -32,7 +32,7 @@
 
 ;; these above are all correct.  for p-values, I'm working with percentiles so need to subtract these percentiles from 1.  For two-tailed t-test, I should just double the p value.  Don't really need to provide p-value -> test statistic functions, should just provide test-stat to p-value functions. For z-scores, this is all standardized.  parameters for chi square and t are test statistic and degrees of freedom; parameters for normal are test statistic, mean, and sd.
 
-;; should also add f-distro for anova. it's all in jStat.centralF and parameters are test stat, df1, and df2. 
+;; should also add f-distro for anova. it's all in jStat.centralF and parameters are test stat, df1, and df2.  Df1 is numerator. see https://github.com/jstat/jstat/blob/master/doc/md/distributions.md 
 
 (defcard-rg test-card
   "testing devcards"
