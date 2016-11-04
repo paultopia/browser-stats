@@ -15,6 +15,13 @@
         sqn (.sqrt js/Math (count observations))]
     (/ (m - hypothesis) (/ sd sqn))))
 
+(defn z-statistic
+  "hypothesis = ostensible population mean
+  observations = vector"
+  [observations hypothesis]
+  (let [m (mean observations)
+        sd (stdev observations)]
+    (/ (m - hypothesis) sd)))
 
 ;; generate p-values from standard distributions.  UNTESTED beyond api test on front page (which may be fine)
 
@@ -30,15 +37,17 @@
   ([test-stat tail]
   (let [one-tailed (js/jStat.normal.cdf test-stat 0 1)]
     (if (= 1 tail) one-tailed (* 2 one-tailed))))
-  ([test-stat mean sd tails]
-   (let [one-tailed (js/jStat.normal.cdf test-stat mean sd)]
+  ([test-stat distro-mean distro-sd tails]
+   (let [one-tailed (js/jStat.normal.cdf test-stat distro-mean distro-sd)]
      (if (= 1 tail) one-tailed (* 2 one-tailed)))))
 
 
 ;; actual hypothesis tests.  These are probably the only ones that should be treated as "public" and ever make it to other namespaces.
 
 (defn t-test
-  "conduct one-sample t-test. defaults to hypothesized mean = zero and two-tailed test; takes map of opts including :tail (1 or 2) and :hypothesis. default are double-tail and hypothesis = 0"
+  "conduct one-sample t-test. defaults to hypothesized mean = zero and two-tailed test
+
+  takes map of opts including :tail (1 or 2) and :hypothesis."
   ([observations]
    (let [t-stat (t-statistic observations 0)
          df (- (count observations) 1)]
@@ -48,3 +57,16 @@
          df (- (count observations) 1)
          tail (:tail opts 2)]
      (t->p t-stat df tail))))
+
+(defn z-test
+  "conduct one-sample z-test. defaults to hypothesized mean = zero, two-tailed test, normal distribution with mean 0 and sd 1
+  takes map of opts including :tail (1 or 2), :hypothesis, :mean (of distro), :sd (ditto)."
+  ([observations]
+   (let [z-stat (z-statistic observations 0)]
+     (z->p z-stat 2)))
+  ([observations opts]
+   (let [z-stat (z-statistic observations (:hypothesis opts 0))
+         tail (:tail opts 2)
+         distro-mean (:mean opts 0)
+         distro-sd (:sd opts 1)]
+     (z->p z-stat distro-mean distro-sd tail))))
