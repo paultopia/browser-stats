@@ -15,6 +15,12 @@
 (defn test-jstat [arr]
   (str (js/jStat.dimensions (js/jStat arr))))
 
+(defn test-jstat-distri-api []
+  (str "calling cdf function: "
+       (js/jStat.chisquare.cdf 14.067 7) ; test statistic -> p-value
+       " calling inverse function: "
+       (js/jStat.chisquare.inv .95 7))) ; p-value -> test-statistic
+
 (defcard-rg test-card
   "testing devcards"
    [:div
@@ -42,6 +48,7 @@
   [:div
    [:h2 "Welcome to Reagent"]
    [:p (test-jstat [[1 2] [3 4] [5 6]])]
+   [:p (test-jstat-distri-api)]
   ;; [:p [:button {:on-click #(switch-line-chart line-datom)} "switch charts"]]
    ;; [line-component line-datom]
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-1)} "load data 1"]]
