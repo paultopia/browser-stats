@@ -1,5 +1,6 @@
 (ns ^:figwheel-no-load statspop.dev
   (:require [statspop.core :as core]
+            [statspop.stats-test]
             [figwheel.client :as figwheel :include-macros true]))
 
 (enable-console-print!)

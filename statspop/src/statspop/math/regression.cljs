@@ -30,6 +30,8 @@
         xty (matrix/multiply x-transpose y)]
     (matrix/m-to-cljs (matrix/multiply xtx-1 xty))))
 
+;; is this silly?  Should I just have a single vector of features? 
+  
 (defn cols->rows
   "assumes you have a single vector of labels [l1 l2 l3]
   and nested vectors of features [[f1-row1 f1-row2 f1-row3] [f2-row1 f2-row2 f2-row3]]
@@ -38,5 +40,4 @@
   [labels features]
   {:labels (apply mapv vector [labels])
    :features (apply mapv vector features)})
-
 

@@ -37,7 +37,7 @@
   ([test-stat tail]
   (let [one-tailed (js/jStat.normal.cdf test-stat 0 1)]
     (if (= 1 tail) one-tailed (* 2 one-tailed))))
-  ([test-stat distro-mean distro-sd tails]
+  ([test-stat distro-mean distro-sd tail]
    (let [one-tailed (js/jStat.normal.cdf test-stat distro-mean distro-sd)]
      (if (= 1 tail) one-tailed (* 2 one-tailed)))))
 

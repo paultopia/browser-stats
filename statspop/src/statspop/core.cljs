@@ -1,13 +1,18 @@
 (ns statspop.core
   (:require [reagent.core :as r]
             [statspop.charts.core :as c]
+            [cljs.test :as t :refer [report] :include-macros true]
             [statspop.charts.scatter :as sp]
             [statspop.charts.hist :as hist]
             [statspop.math.matrix :as matrix]
             [statspop.detection :as detection]
             [devcards.core])
-  (:require-macros [devcards.core :as dc :refer [defcard deftest defcard-rg]]))
+  (:require-macros [devcards.core :as dc :refer [defcard deftest defcard-rg]]
+                   [cljs.test :refer [is testing]]))
 
+(deftest test-for-devcards-true (is (= 1 (dec 2))))
+
+(deftest test-for-devcards-false (is (= 3 (dec 2))))
 
 ;; experimenting with jstat
 (def test-mini (js/jStat (clj->js [[1 2] [3 4] [5 6]])))
@@ -74,7 +79,8 @@
 ;; Initialize app
 
 (defn mount-root []
-  (r/render [home-page] (.getElementById js/document "app")))
+  (when-let [app (.getElementById js/document "app")]
+    (r/render [home-page] app)))
 
 (defn init! []
   (mount-root))

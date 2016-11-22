@@ -37,7 +37,7 @@
                          :optimizations :none
                          :pretty-print  true}}
                        :devcards
-                       {:source-paths ["src" "env/dev/cljs"]
+                       {:source-paths ["src" "env/dev/cljs" "test"]
                         :figwheel
                         {:devcards true}
                         :compiler
