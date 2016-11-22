@@ -26,20 +26,23 @@
 ;; generate p-values from standard distributions.  UNTESTED beyond api test on front page (which may be fine)
 
 (defn chisq->p [test-stat df]
-  (js/jStat.chisquare.cdf test-stat df))
+  (- 1 (js/jStat.chisquare.cdf test-stat df)))
 
 (defn t->p [test-stat df tail]
-  (let [one-tailed (js/jStat.studentt.cdf test-stat df)]
+  (let [one-tailed (- 1 (js/jStat.studentt.cdf test-stat df))]
     (if (= 1 tail) one-tailed (* 2 one-tailed))))
 
 (defn z->p
   "defaults to standardized normal."
   ([test-stat tail]
-  (let [one-tailed (js/jStat.normal.cdf test-stat 0 1)]
+   (let [one-tailed (- 1 (js/jStat.normal.cdf test-stat 0 1))]
     (if (= 1 tail) one-tailed (* 2 one-tailed))))
   ([test-stat distro-mean distro-sd tail]
-   (let [one-tailed (js/jStat.normal.cdf test-stat distro-mean distro-sd)]
+   (let [one-tailed (- 1 (js/jStat.normal.cdf test-stat distro-mean distro-sd))]
      (if (= 1 tail) one-tailed (* 2 one-tailed)))))
+
+
+;; should also add f-distro for anova. it's all in jStat.centralF and parameters are test stat, df1, and df2.  Df1 is numerator. see https://github.com/jstat/jstat/blob/master/doc/md/distributions.md 
 
 
 ;; actual hypothesis tests.  These are probably the only ones that should be treated as "public" and ever make it to other namespaces.
