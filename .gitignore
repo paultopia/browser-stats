@@ -16,4 +16,5 @@ pom.xml.asc
 /.env
 /statspop/public/js
 /statspop/public/css
+/statspop/public/assets
 .DS_Store
