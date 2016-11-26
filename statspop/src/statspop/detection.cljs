@@ -2,18 +2,23 @@
   "attempt to detect tabular data in non-table formats by finding continuous sets of rows of at least size x with at least some y proportion of numbers.  data coming in from chrome extension as documentElement.innerText
 
  public functions:
-
+(DOCS TO BE WRITTEN ONCE THIS IS SEMI-STABLE)
 
 
   for actual use in the UI, the user will have to be asked to choose heuristic detection and then operate a pair of sliders to do this.
 
+  This is the most messy namespace and will have to be. The idea is that rational people will put their tabular data in tables, but there are a lot of people who aren't rational and who put tabular data into all kinds of garbage, like <pre>, weird stuff with <div>, etc. 
 
+  There is going to be no perfect method to detect such things.  I anticipate adding more detectors over time to get, e.g., common div formats.  It might make sense to have content.js grab everything in a <pre> tag too.
   "
   (:require [clojure.string :as s]
             [devcards.core])
   (:require-macros [devcards.core :as dc :refer [defcard deftest defcard-rg]]))
 
 ;; when this blows up, and it will, gonna need a lot more tests.
+
+(defn transpose [m]
+  (apply mapv vector m))
 
 ;; to filter by digit proportions
 (defn- lines [text] (s/split text #"\n"))
@@ -104,6 +109,12 @@
 (defn tablemaker [r]
   (mapv rowmaker r))
 
+;; those last two functions BADLY need some kind of way to identify text columns split into words and combine them before the string split stuff happens, lest I end up creating
+
+(defn table-validator
+  "take table and make sure each row has the same number of columns (other validation steps?)"
+  [nested-v]
+  (apply = (map count nested-v)))
 
 (defn split-runs
   "performs gather-runs then splits each run into nested vectors (so now the ultimate big vector has two levels of nesting). Output is vector of vector of vectors, where top-level vector consists of a series (which may be length 0 or 1) of 2d nested vectors each representing best guess at a table of data."
@@ -111,4 +122,23 @@
   (let [runs (gather-runs text minproportion minruns)]
     (mapv tablemaker runs)))
 
+(defn identify-numeric-columns
+  "takes a single table (2d vec) from split-runs, transposes to columns, and identifies numeric ones. NEEDS VALIDATION."
+  [nested-v]
+  (let [cols (transpose nested-v)
+        digits (mapv #(mapv just-digits %) cols)]
+    (mapv = cols digits)))
 
+(defn drop-nonnumeric-columns
+  "takes a single table (2d vec) from split-runs and drops all non-numeric columns.  NEEDS VALIDATION."
+  [nested-v]
+  (let [cols (transpose nested-v)
+        digits (mapv #(mapv just-digits %) cols)
+        pairs (mapv vector cols digits)
+        numeric (filterv #(= (first %) (last %)) pairs)]
+    (transpose (mapv #(apply flatten %) numeric))))
+
+(defn drop-nonnumeric-except-first
+  "like drop-nonnumeric (which I might not actually use), except assumes first column is descriptive text, e.g., like in a dataset where each row is a city"
+  [nested-v]
+  :foo)

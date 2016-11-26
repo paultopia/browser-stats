@@ -4,7 +4,8 @@
             [devcards.core :as dc :refer-macros [defcard deftest defcard-rg]]
             [reagent.core :as r]
             [cljs.test :as t :refer-macros [is testing]]
-            ))
+            )
+  (:require-macros [statspop.tmacros :as mac]))
 
 
 (def crazy-test-block "123 ab
@@ -90,3 +91,30 @@
   (is (=
        [["12" "25" "38" "91"] ["1992" "29" "38" "9081"] ["5512" "24" "38" "91"] ["12" "621" "38" "91"] ["12" "88" "38" "91"] ["12" "253" "313444" "91"]]
        (last (d/split-runs crazy-test-block 0.5 3)))))
+
+  (def numid-test-data "12 25 38 91
+  1992 29 38 9081
+  5512 24 38 91a
+  12 621 38 91
+  12 88 38 91
+  12 253 313444 91")
+
+(defcard-rg id-numeric
+  [:div
+   [:p  (str (d/identify-numeric-columns (last (d/split-runs numid-test-data 0.5 3))))]])
+
+(defcard-rg drop-nonnumeric
+  [:div
+   [:p  (str (d/drop-nonnumeric-columns (last (d/split-runs numid-test-data 0.5 3))))]])
+
+;; all the boilerplate with the defcard-rgs care annoying me.
+
+(defn easycard [calculation]
+    [:div
+     [:p  (str calculation)]])
+
+(defcard-rg easycard-t (+ 1 1))
+
+(mac/rgcard foo (+ 2 2))
+
+(.log js/console (str (macroexpand-1 '(mac/rgcard foo (+ 2 2)))))
