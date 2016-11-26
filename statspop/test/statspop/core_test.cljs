@@ -4,6 +4,7 @@
              [cljs.test :as t :refer-macros [is testing]]
              [statspop.matrix-test]
              [statspop.download-test]
+             [statspop.detection-test]
              [statspop.regression-test]
              [statspop.stats-test]
              [statspop.chart-test]))
