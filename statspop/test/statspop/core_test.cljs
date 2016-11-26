@@ -3,5 +3,6 @@
              [reagent.core :as r]
              [cljs.test :as t :refer-macros [is testing]]
              [statspop.matrix-test]
+             [statspop.download-test]
              [statspop.regression-test]
              [statspop.stats-test]))

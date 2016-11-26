@@ -22,8 +22,7 @@
 
 (defn home-page []
   [:div
-   [:h2 "Welcome to Reagent"]
-   [:p (download-csv "foo,bar")]
+   [:h2 "UI goes here"]
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-1)} "load data 1"]]
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-2)} "load data 2"]]
    [:p [:button {:on-click #(reset! c/chart-datom (sp/make-scatterplot sp/test-data))} "scatterplot"]]
