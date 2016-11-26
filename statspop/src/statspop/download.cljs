@@ -16,4 +16,18 @@
     (js/Blob. arr {:type "text/csv"})))
 
 (defn download-csv [v-of-v]
-  [:a {:href (js/window.URL.createObjectURL (makeblob v-of-v)) :download "test.csv"} "download"])
+  [:a {:href (js/window.URL.createObjectURL (makeblob v-of-v)) :download "data.csv"} "download"])
+
+
+(defn format-map-as-json
+"what it says on the box. map to json string."
+  [m] (.stringify js/JSON (clj->js m)))
+
+(defn- makeblob2
+  "to be gotten rid of after it works."
+  [m]
+  (let [arr (clj->js [(format-map-as-json m)])]
+    (js/Blob. arr {:type "text/json"})))
+
+(defn download-json [m]
+  [:a {:href (js/window.URL.createObjectURL (makeblob2 m)) :download "data.json"} "download"])
