@@ -1,7 +1,5 @@
 (ns statspop.charts.scatter)
 
-(def test-data {:x [1 2 3 4 5] :y [100 200 100 40 10]})
-
 (defn reformat-data
   "variables in {:x [1 2 3] :y [4 5 6]} form"
   [variables]

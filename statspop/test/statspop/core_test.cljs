@@ -5,4 +5,5 @@
              [statspop.matrix-test]
              [statspop.download-test]
              [statspop.regression-test]
-             [statspop.stats-test]))
+             [statspop.stats-test]
+             [statspop.chart-test]))
