@@ -5,7 +5,7 @@
             [reagent.core :as r]
             [cljs.test :as t :refer-macros [is testing]]
             )
-  (:require-macros [statspop.tmacros :as mac]))
+  (:require-macros [statspop.tmacros :as mac :refer [rgcard]]))
 
 
 (def crazy-test-block "123 ab
@@ -107,14 +107,19 @@
   [:div
    [:p  (str (d/drop-nonnumeric-columns (last (d/split-runs numid-test-data 0.5 3))))]])
 
-;; all the boilerplate with the defcard-rgs care annoying me.
+;; all the boilerplate with the defcard-rgs are annoying me.  slapping a macro together to fix.
 
-(defn easycard [calculation]
-    [:div
-     [:p  (str calculation)]])
 
-(defcard-rg easycard-t (+ 1 1))
+(def descriptor-numid-test-data "foo 12 25 38 91
+  bar 1992 29 38 9081
+  baz 5512 24 38 91a
+  bat 12 621 38 91
+  woof 12 88 38 91
+  meow 12 253 313444 91")
 
-(mac/rgcard foo (+ 2 2))
+(rgcard foo (+ 2 2)) ; just making sure my macro doesn't break in any weird way.
+
+(rgcard numeric-except-first-col
+        (d/drop-nonnumeric-except-first (last (d/split-runs descriptor-numid-test-data .05 3))))
 
 (.log js/console (str (macroexpand-1 '(mac/rgcard foo (+ 2 2)))))

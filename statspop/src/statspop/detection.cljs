@@ -141,4 +141,12 @@
 (defn drop-nonnumeric-except-first
   "like drop-nonnumeric (which I might not actually use), except assumes first column is descriptive text, e.g., like in a dataset where each row is a city"
   [nested-v]
-  :foo)
+  (let [cols (transpose nested-v)
+        descriptors (first cols)
+        mustbe-nums (rest cols)
+        digits (mapv #(mapv just-digits %) mustbe-nums)
+        pairs (mapv vector mustbe-nums digits)
+        numeric (filterv #(= (first %) (last %)) pairs)
+        flattened-numeric (map #(apply flatten %) numeric)
+        combined (conj flattened-numeric descriptors)]
+    (transpose combined)))
