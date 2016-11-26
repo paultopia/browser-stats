@@ -6,7 +6,9 @@
             [statspop.charts.hist :as hist]
             [statspop.math.matrix :as matrix]
             [statspop.detection :as detection]
-            [devcards.core :as dc :refer-macros [defcard deftest defcard-rg]]))
+            [devcards.core :as dc :refer-macros [defcard deftest defcard-rg]]
+            [statspop.download :refer [download-csv]]
+            ))
 
 
 (defcard-rg test-card
@@ -21,6 +23,7 @@
 (defn home-page []
   [:div
    [:h2 "Welcome to Reagent"]
+   [:p (download-csv "foo,bar")]
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-1)} "load data 1"]]
    [:p [:button {:on-click #(reset! c/chart-datom c/test-data-2)} "load data 2"]]
    [:p [:button {:on-click #(reset! c/chart-datom (sp/make-scatterplot sp/test-data))} "scatterplot"]]
