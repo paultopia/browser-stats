@@ -7,7 +7,7 @@
             [statspop.math.matrix :as matrix]
             [statspop.detection :as detection]
             [devcards.core :as dc :refer-macros [defcard deftest defcard-rg]]
-            [statspop.download :refer [download-csv]]
+            [statspop.download :refer [downloader]]
             ))
 
 
