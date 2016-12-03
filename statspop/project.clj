@@ -59,6 +59,8 @@
 
   :aliases {"release" ["do" "clean" ["cljsbuild" "once" "release"]]}
 
+  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+
   :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.4-5"]
                                   [org.clojure/tools.nrepl "0.2.12"]
                                   [com.cemerick/piggieback "0.2.2-SNAPSHOT"]]}})

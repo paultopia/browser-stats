@@ -23,7 +23,7 @@
 (defn home-page []
   [:div
    [:h2 "UI goes here"]
-   [:p "loren ipsum"]
+   [:p "loren ipsum foobar"]
    ])
 
 ;; -------------------------
