@@ -1,6 +1,7 @@
 (ns statspop.core
   (:require [reagent.core :as r]
             [statspop.charts.core :as c]
+            [statspop.io.table :as table]
             [cljs.test :as t :refer-macros [is testing]]
             [statspop.charts.scatter :as sp]
             [statspop.charts.hist :as hist]
@@ -24,6 +25,7 @@
   [:div
    [:h2 "UI goes here"]
    [:p "loren ipsum foobar"]
+   [table/table-display [[1 2] [3 4]]]
    ])
 
 ;; -------------------------
