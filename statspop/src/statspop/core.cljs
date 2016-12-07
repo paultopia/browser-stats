@@ -25,7 +25,6 @@
   [:div
    [:h2 "UI goes here"]
    [:p "loren ipsum foobar"]
-   [table/table-display [[1 2] [3 4]]]
    ])
 
 ;; -------------------------
