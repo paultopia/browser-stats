@@ -8,12 +8,22 @@
 (defn table-display
   "tdata is nested row-wise vectors of table data. This component displays the first 5 rows and columns for aid of identification"
   [tdata]
-  (let [excerpt (take 5 (map #(take 5 %) tdata))]
-    [:p (str excerpt)]))
+  (let [excerpt (take 5 (map #(for [y (take 5 %)] [:td {:key (random-uuid)} (str y)]) tdata))
+        rows (for [x excerpt] [:tr {:key (random-uuid)} x])]
+    [:div
+     [:table
+      [:tbody rows]]
+     [:p "Is there a header row? "
+      [:button " yes "]
+      [:button " no "]]
+     [:p "Is there a column of observation names? "
+      [:button " yes "]
+      [:button " no "]]]))
 
+;; where tbody is now, could have some conditional code depending on whether there are headers... actually, no, this is the preview table.
 
 (defcard-rg test-table
   "testing table"
   [:div
-   [:p 
-   [table-display test-data]]])
+   [:p (random-uuid)]
+   [table-display test-data]])
