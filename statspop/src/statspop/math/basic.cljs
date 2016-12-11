@@ -1,6 +1,13 @@
 (ns statspop.math.basic
   "basic math and stats functions"
-  (:require [goog.math :as gmath]))
+  (:require [goog.math :as gmath]
+            [cljs.spec :as spec]))
+
+(spec/def ::numeric-vector (spec/coll-of number? :kind vector?))
+
+(defn same-length? [v1 v2]
+  (= (count v1)
+     (count v2)))
 
 (defn stdev
   "standard deviation. vec of nums -> num.  Note, per goog.math api docs, this is sample standard deviation "
@@ -16,6 +23,14 @@
   "the name says it all: multiply the corresponding elements of two vectors together"
   [vec1 vec2]
   (map #(apply * %) (mapv vector vec1 vec2)))
+
+(spec/fdef elementwise-vector-multiply
+           :args (spec/and
+                  (spec/cat
+                   :v1 ::numeric-vector
+                   :v2 ::numeric-vector)
+                  #(same-length? (:v1 %) (:v2 %))))
+;; might be too restrictive, perhaps should accept sequences and such not just vectors
 
 (defn corr
   "sample pearson correlation coefficient of two numeric vectors"
