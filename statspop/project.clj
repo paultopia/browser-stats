@@ -8,7 +8,8 @@
                  [org.clojure/clojurescript "1.9.229" :scope "provided"]
                  [reagent "0.6.0"]
                  [devcards "0.2.2"]
-                 [re-com "1.0.0"]]
+                 [re-com "1.0.0"]
+                 [org.clojure/test.check "0.9.0"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
             [lein-figwheel "0.5.8"]]

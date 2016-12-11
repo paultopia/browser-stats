@@ -17,7 +17,9 @@ pom.xml.asc
 /statspop/public/js
 /statspop/public/css
 /statspop/public/assets
-/statspop/target
+/statspop/target/
 /statspop/.nrepl-port
 /statspop/.lein-repl-history
 .DS_Store
+*.swp
+leiningen*
