@@ -2,13 +2,13 @@
 
 chrome extension to capture data on a webpage and do basic data analysis on it.  Concept: detect things that look like data (tables + numeric stuff formatted like tables with divs and such), and allow users to activate a popup window to do basic data analysis on it (hypothesis tests, regressions, visualizations, etc.) and download data.  
 
-Because the gap between "here's an interesting table" and "I wonder what the relationship between those variables is" should be as small and frictionless as possible.
+Because the gap between "here's an interesting table" and "let's see what the relationship between those variables is" should be as small and frictionless as possible.
 
 very much work in progress.  Most of the meat is in cljs in the statspop directory.
 
 Currently has:
 
-- stub of content.js for extension to extract tables from webpage (just sends data to server)
+- stub of content.js for extension to extract tables from webpage (ultimately will just send data to background/popup)
 
 - charting (scatterplots, histograms, using chartist.js)
 
